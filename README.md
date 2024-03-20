@@ -10,7 +10,7 @@ This repository contains automated test scripts written in Postman for testing t
 ## Execution
 
 1. Open Postman.
-2. Import the collection `BookingUpdateAPITests.postman_collection.json` located in the `tests` directory.
+2. Import the collection `BookingUpdateAPITests.postman_collection.json` located in the `root` directory.
 3. Set up all the environment variables in Postman.
 4. Run the collection. All test cases will be executed automatically.
 
@@ -81,6 +81,6 @@ This repository contains automated test scripts written in Postman for testing t
 **Description**: Simulate a conflict during the update process.  
 **Steps**:
 1. Send a PUT request to update an existing booking.
-2. Simulate a conflict.
+2. Simulate a conflict with the dummy data provided in the export.
 3. Verify that the response indicates a conflict error.
 
