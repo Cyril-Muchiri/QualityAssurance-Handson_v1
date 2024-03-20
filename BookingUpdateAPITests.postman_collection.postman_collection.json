@@ -1,0 +1,651 @@
+{
+	"info": {
+		"_postman_id": "90a4012a-a1b0-4a78-8676-3eaae87c737e",
+		"name": "BookingUpdateAPITests.postman_collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28746291",
+		"_collection_link": "https://www.postman.com/cyril-muchiri/workspace/baby-beast/collection/28746291-90a4012a-a1b0-4a78-8676-3eaae87c737e?action=share&source=collection_link&creator=28746291"
+	},
+	"item": [
+		{
+			"name": "valid update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test case: Valid Update - Existing booking with valid ID",
+							"// Preconditions: Send a PUT request to update an existing booking with valid data",
+							"// Expected result: Booking details are successfully updated as per the provided data",
+							"",
+							"pm.test(\"Status code is 200 OK\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Booking details are updated successfully\", function () {",
+							"    // Check if the response body contains the updated booking details",
+							"    pm.expect(pm.response.json()).to.deep.include({",
+							"        firstname: \"James\",",
+							"        lastname: \"Brown\",",
+							"        totalprice: 111, // Update with the expected total price",
+							"        depositpaid: true, // Update with the expected deposit paid status",
+							"        bookingdates: {",
+							"            checkin: \"2018-01-01\", // Update with the expected check-in date",
+							"            checkout: \"2019-01-01\" // Update with the expected check-out date",
+							"        },",
+							"        additionalneeds: \"UpdatedBreakfast\" // Update with the expected additional needs",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Cookie",
+						"value": "token=abc123",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"UpdatedBreakfast\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://restful-booker.herokuapp.com/booking/ 794",
+					"protocol": "https",
+					"host": [
+						"restful-booker",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"booking",
+						" 794"
+					],
+					"query": [
+						{
+							"key": "bookingid",
+							"value": "794",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update with Missing Fields",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test for Update with Missing Fields",
+							"pm.test(\"Update with Missing Fields\", function () {",
+							"    // Verify that the response status is 400 Bad Request (or the appropriate status code for validation errors)",
+							"    pm.response.to.have.status(400);",
+							"",
+							"    // Verify that the response body contains an error message indicating missing fields",
+							"    pm.expect(pm.response.text()).to.include(\"Validation error: Missing required fields\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/1885"
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid Booking ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Valid Update - Existing booking with valid ID",
+							"pm.test(\"Valid Update - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL",
+							"    var endpoint = \"https://your-api-endpoint.com/booking/0\"; // Update with the actual booking ID",
+							"    ",
+							"    // Define the request body with valid data to update the booking",
+							"    var requestBody = {",
+							"        \"firstname\": \"James\",",
+							"    \"lastname\": \"Brown\",",
+							"    \"totalprice\": 200,",
+							"    \"depositpaid\": true,",
+							"    \"bookingdates\": {",
+							"        \"checkin\": \"2023-03-01\",",
+							"        \"checkout\": \"2023-03-05\"",
+							"    },",
+							"    \"additionalneeds\": \"UpdatedBreakfast\"",
+							"    };",
+							"    ",
+							"    // Send the PUT request to update the booking",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"        // Assert that the request was successful (status code 200)",
+							"        pm.response.to.have.status(200);",
+							"        ",
+							"        // Assert that the booking details were successfully updated",
+							"        pm.expect(res.json().firstname).to.eql(\"James\");",
+							"        pm.expect(res.json().lastname).to.eql(\"Brown\");",
+							"        pm.expect(res.json().totalprice).to.eql(200);",
+							"        pm.expect(res.json().depositpaid).to.eql(true);",
+							"        pm.expect(res.json().bookingdates.checkin).to.eql(\"2023-03-01\");",
+							"        pm.expect(res.json().bookingdates.checkout).to.eql(\"2023-03-05\");",
+							"        pm.expect(res.json().additionalneeds).to.eql(\"UpdatedBreakfast\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"firstname\": \"James\",\n    \"lastname\": \"Brown\",\n    \"totalprice\": 200,\n    \"depositpaid\": true,\n    \"bookingdates\": {\n        \"checkin\": \"2023-03-01\",\n        \"checkout\": \"2023-03-05\"\n    },\n    \"additionalneeds\": \"UpdatedBreakfast\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/0"
+			},
+			"response": []
+		},
+		{
+			"name": "update with invalid data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Update with Invalid Data - Existing booking with valid ID",
+							"pm.test(\"Update with Invalid Data - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL",
+							"    var endpoint = \"https://your-api-endpoint.com/booking/99999\"; // Update with the actual booking ID",
+							"    ",
+							"    var requestBody = {",
+							"        \"firstname\": \"James\",",
+							"    \"lastname\": \"Brown\",",
+							"    \"totalprice\": 200,",
+							"    \"depositpaid\": true,",
+							"    \"bookingdates\": {",
+							"        \"checkin\": \"2023-03-01\",",
+							"        \"checkout\": \"2023-01-50\"",
+							"    },",
+							"    \"additionalneeds\": \"UpdatedBreakfast\"",
+							"    };",
+							"    ",
+							"    // Send the PUT request to update the booking with invalid data",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"          header: {",
+							"            'Content-Type': 'application/json',",
+							"            'Accept': 'application/json',",
+							"            'Authorization': 'Basic YWRtaW46cGFzc3dvcmQxMjM='",
+							"        },",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"       ",
+							"        pm.response.to.have.status(400); ",
+							"        pm.expect(res.json().error).to.eql(\"Invalid date format for checkout date.\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstname\": \"James\",\n    \"lastname\": \"Brown\",\n    \"totalprice\": 200,\n    \"depositpaid\": true,\n    \"bookingdates\": {\n        \"checkin\": \"2023-03-01\",\n        \"checkout\": \"2023-01-50\"\n    },\n    \"additionalneeds\": \"UpdatedBreakfast\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/99999"
+			},
+			"response": []
+		},
+		{
+			"name": "Unauthorized Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Unauthorized Update - Existing booking with valid ID",
+							"pm.test(\"Unauthorized Update - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL",
+							"    var endpoint = \"https://your-api-endpoint.com/booking/369\"; // Update with the actual booking ID",
+							"    ",
+							"    // Define the request body with valid data",
+							"    var requestBody = {",
+							"        \"firstname\": \"UpdatedFirstname\",",
+							"        \"lastname\": \"UpdatedLastname\",",
+							"        \"totalprice\": 200,",
+							"        \"depositpaid\": true,",
+							"        \"bookingdates\": {",
+							"            \"checkin\": \"2023-01-01\",",
+							"            \"checkout\": \"2023-01-02\"",
+							"        },",
+							"        \"additionalneeds\": \"UpdatedBreakfast\"",
+							"    };",
+							"    ",
+							"    // Send the PUT request to update the booking without authorization",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"        header: {",
+							"            'Content-Type': 'application/json',",
+							"            'Accept': 'application/json'",
+							"            ",
+							"        },",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"        // Assert that the request was unauthorized (status code 401)",
+							"        pm.response.to.have.status(401); // ",
+							"        pm.expect(res.json().error).to.eql(\"Unauthorized access. Please provide valid credentials.\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": "https://restful-booker.herokuapp.com/booking/369"
+			},
+			"response": []
+		},
+		{
+			"name": "Update with Expired Session",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Update with Expired Session - Existing booking with valid ID",
+							"pm.test(\"Update with Expired Session - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL",
+							"    var endpoint = \"https://your-api-endpoint.com/booking/369\"; // Update with the actual booking ID",
+							"    ",
+							"    // Define the request body with valid data",
+							"    var requestBody = {",
+							"        \"firstname\": \"UpdatedFirstname\",",
+							"        \"lastname\": \"UpdatedLastname\",",
+							"        \"totalprice\": 200,",
+							"        \"depositpaid\": true,",
+							"        \"bookingdates\": {",
+							"            \"checkin\": \"2023-01-01\",",
+							"            \"checkout\": \"2023-01-02\"",
+							"        },",
+							"        \"additionalneeds\": \"UpdatedBreakfast\"",
+							"    };",
+							"    ",
+							"    // Define an expired session token",
+							"    var expiredToken = \"expired-session-token\"; // ",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"        header: {",
+							"            'Content-Type': 'application/json',",
+							"            'Accept': 'application/json',",
+							"            'Authorization': 'Bearer ' + expiredToken ",
+							"        },",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"        ",
+							"        pm.response.to.have.status(401); // ",
+							"        pm.expect(res.json().error).to.eql(\"Expired session. Please log in again.\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Basic YWRtaW46cGFzc3dvcmQxMjM=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"UpdatedBreakfast\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/369"
+			},
+			"response": []
+		},
+		{
+			"name": "Duplicate Booking Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Duplicate Booking Update - Existing booking with valid ID",
+							"pm.test(\"Duplicate Booking Update - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL and booking ID",
+							"    var endpoint = \"https://your-api-endpoint.com/booking/450\";",
+							"    ",
+							"    // Define the request body with valid data",
+							"    var requestBody = {",
+							"       \"firstname\" : \"James\",",
+							"    \"lastname\" : \"Brown\",",
+							"    \"totalprice\" : 111,",
+							"    \"depositpaid\" : true,",
+							"    \"bookingdates\" : {",
+							"        \"checkin\" : \"2018-01-01\",",
+							"        \"checkout\" : \"2019-01-01\"",
+							"    },",
+							"    \"additionalneeds\" : \"UpdatedBreakfast\"",
+							"    };",
+							"    ",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"        pm.response.to.have.status(200); // ",
+							"    });",
+							"",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"    ",
+							"        body: JSON.stringify(requestBody)",
+							"    }, function (err, res) {",
+							"       ",
+							"        pm.response.to.have.status(400); // ",
+							"        pm.expect(res.json().error).to.eql(\"Duplicate booking update request ignored.\");",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Transfer-Encoding",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"firstname\" : \"James\",\n    \"lastname\" : \"Brown\",\n    \"totalprice\" : 111,\n    \"depositpaid\" : true,\n    \"bookingdates\" : {\n        \"checkin\" : \"2018-01-01\",\n        \"checkout\" : \"2019-01-01\"\n    },\n    \"additionalneeds\" : \"UpdatedBreakfast\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/{{booking_id}}"
+			},
+			"response": []
+		},
+		{
+			"name": "update with large dataset",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Test Case: Update with Large Data Payload - Existing booking with valid ID",
+							"pm.test(\"Update with Large Data Payload - Existing booking with valid ID\", function () {",
+							"    // Define the endpoint URL and booking ID",
+							"    var endpoint = \"https://restful-booker.herokuapp.com/booking/450\"; // Update with the actual booking ID",
+							"    ",
+							"    var largeDataPayload = {",
+							"    \"firstname\": \"UpdatedFirstname\",",
+							"    \"lastname\": \"UpdatedLastname\",",
+							"    \"totalprice\": 200,",
+							"    \"depositpaid\": true,",
+							"    \"bookingdates\": {",
+							"        \"checkin\": \"2023-01-01\",",
+							"        \"checkout\": \"2023-01-02\"",
+							"    },",
+							"    \"additionalneeds\": \"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed et mauris ac quam laoreet efficitur. Donec vel dictum odio. Morbi rutrum velit id odio dapibus, eget aliquet nulla tempor. Integer id volutpat lacus. Phasellus nec purus nec leo vestibulum fringilla. Nullam nec aliquam velit. Mauris bibendum lacus eget arcu lacinia, id rutrum orci dapibus. Phasellus id neque at purus euismod consectetur. Proin aliquet orci nec velit fringilla, eget rhoncus enim dictum. In hac habitasse platea dictumst. Phasellus convallis bibendum nulla eu lobortis.\"",
+							"",
+							"    };",
+							"    ",
+							"    pm.sendRequest({",
+							"        url: endpoint,",
+							"        method: 'PUT',",
+							"     ",
+							"        body: JSON.stringify(largeDataPayload)",
+							"    }, function (err, res) {",
+							"      ",
+							"        pm.response.to.have.status(200); // ",
+							"    });",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Authorization}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "https://restful-booker.herokuapp.com/booking/{{booking_id}}"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "booking_id",
+			"value": "450"
+		},
+		{
+			"key": "Authorization",
+			"value": "Basic YWRtaW46cGFzc3dvcmQxMjM="
+		}
+	]
+}

@@ -1,0 +1,201 @@
+{
+	"info": {
+		"_postman_id": "84393cbf-1c48-45af-9efe-92feb95076d2",
+		"name": "Votify-Project",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28746291",
+		"_collection_link": "https://www.postman.com/cyril-muchiri/workspace/baby-beast/collection/28746291-84393cbf-1c48-45af-9efe-92feb95076d2?action=share&source=collection_link&creator=28746291"
+	},
+	"item": [
+		{
+			"name": "create a topic",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"topicName\": \"Test topic from api\",\n  \"answers\": [\n    {\"choice\": \"Choice 1\"},\n    {\"choice\": \"Choice 3\"}\n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/topics/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"topics",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get allpolls",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "12345",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "diesel@test.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/active-polls/fetch-all-polls",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"active-polls",
+						"fetch-all-polls"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "fetchAll-Choices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/active-polls/fetch-all-poll-choices",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"active-polls",
+						"fetch-all-poll-choices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllElectives",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/getElectives/showAllElectives",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"getElectives",
+						"showAllElectives"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAllNominees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/getElectives/showNominees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"getElectives",
+						"showNominees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetLatestElective",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/electives/get-latest-elective",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"electives",
+						"get-latest-elective"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RegisterElective",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"electiveTitle\": \"Your Elective Title\",\n  \"nominees\": [\n    {\n      \"nomineeName\": \"Nominee 1\"\n    },\n    {\n      \"nomineeName\": \"Nominee 2\"\n    },\n    {\n      \"nomineeName\": \"Nominee 3\"\n    }\n  \n  ]\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/votify-v2/rest/electives/register-elective",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"votify-v2",
+						"rest",
+						"electives",
+						"register-elective"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
